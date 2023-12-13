@@ -7,7 +7,6 @@ Panels:
         - /Global Options1
         - /Status1
         - /Imu1
-        - /Imu1/Status1
       Splitter Ratio: 0.5
     Tree Height: 549
   - Class: rviz/Selection
@@ -91,7 +90,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 19.73822784423828
+      Distance: 32.8247184753418
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -99,17 +98,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: -1.8457229137420654
-        Y: -1.3890265226364136
-        Z: 4.688231468200684
+        X: -0.5177863836288452
+        Y: -0.32005834579467773
+        Z: -3.040815830230713
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.4553983211517334
+      Pitch: 0.6703979969024658
       Target Frame: <Fixed Frame>
-      Yaw: 0.7553980350494385
+      Yaw: 6.278580188751221
     Saved: ~
 Window Geometry:
   Displays:
