@@ -15,8 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
   serial
 )
 include_directories(
-  include 
-  src
+  include
   ${catkin_INCLUDE_DIRS}
   ${Eigen3_INCLUDE_DIRS} 
 )

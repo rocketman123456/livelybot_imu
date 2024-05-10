@@ -1,9 +1,12 @@
+#include "ahrs_driver.h"
+
 #include <Eigen/Eigen>
-#include <ahrs_driver.h>
 
 namespace FDILink
 {
-    ahrsBringup::ahrsBringup() : frist_sn_(false), serial_timeout_(20)
+    AhrsBringup::AhrsBringup()
+        : frist_sn_(false)
+        , serial_timeout_(20)
     {
         ros::NodeHandle pravite_nh("~");
         // topic_name & frame_id
@@ -49,15 +52,15 @@ namespace FDILink
         processLoop();
     }
 
-    ahrsBringup::~ahrsBringup()
+    AhrsBringup::~AhrsBringup()
     {
         if (serial_.isOpen())
             serial_.close();
     }
 
-    void ahrsBringup::processLoop()
+    void AhrsBringup::processLoop()
     {
-        ROS_INFO("ahrsBringup::processLoop: start");
+        ROS_INFO("AhrsBringup::processLoop: start");
         while (ros::ok())
         {
             if (!serial_.isOpen())
@@ -189,7 +192,7 @@ namespace FDILink
                     frist_sn_ = true;
                 }
                 // check sn
-                ahrsBringup::checkSN(TYPE_IMU);
+                AhrsBringup::checkSN(TYPE_IMU);
             }
             else if (head_type[0] == TYPE_AHRS)
             {
@@ -212,7 +215,7 @@ namespace FDILink
                     frist_sn_ = true;
                 }
                 // check sn
-                ahrsBringup::checkSN(TYPE_AHRS);
+                AhrsBringup::checkSN(TYPE_AHRS);
             }
             else if (head_type[0] == TYPE_INSGPS)
             {
@@ -234,7 +237,7 @@ namespace FDILink
                     std::cout << "header_crc8 matched." << std::endl;
                 }
 
-                ahrsBringup::checkSN(TYPE_INSGPS);
+                AhrsBringup::checkSN(TYPE_INSGPS);
             }
             else if (head_type[0] == TYPE_GEODETIC_POS)
             {
@@ -257,7 +260,7 @@ namespace FDILink
                     frist_sn_ = true;
                 }
 
-                ahrsBringup::checkSN(TYPE_GEODETIC_POS);
+                AhrsBringup::checkSN(TYPE_GEODETIC_POS);
             }
             if (head_type[0] == TYPE_IMU)
             {
@@ -369,7 +372,8 @@ namespace FDILink
                 uint16_t head_crc16_l = Geodetic_Position_frame_.frame.header.header_crc16_l;
                 uint16_t head_crc16_h = Geodetic_Position_frame_.frame.header.header_crc16_h;
                 uint16_t head_crc16   = head_crc16_l + (head_crc16_h << 8);
-                size_t data_s = serial_.read(Geodetic_Position_frame_.read_buf.read_msg, (GEODETIC_POS_LEN + 1)); // 24+1
+                size_t   data_s =
+                    serial_.read(Geodetic_Position_frame_.read_buf.read_msg, (GEODETIC_POS_LEN + 1)); // 24+1
                 // if (if_debug_){
                 //   for (size_t i = 0; i < (AHRS_LEN + 1); i++)
                 //   {
@@ -407,10 +411,12 @@ namespace FDILink
                 sensor_msgs::Imu imu_data;
                 imu_data.header.stamp    = ros::Time::now();
                 imu_data.header.frame_id = imu_frame_id_.c_str();
-                Eigen::Quaterniond q_ahrs(ahrs_frame_.frame.data.data_pack.Qw,
-                                          ahrs_frame_.frame.data.data_pack.Qx,
-                                          ahrs_frame_.frame.data.data_pack.Qy,
-                                          ahrs_frame_.frame.data.data_pack.Qz);
+                Eigen::Quaterniond q_ahrs(
+                    ahrs_frame_.frame.data.data_pack.Qw,
+                    ahrs_frame_.frame.data.data_pack.Qx,
+                    ahrs_frame_.frame.data.data_pack.Qy,
+                    ahrs_frame_.frame.data.data_pack.Qz
+                );
                 Eigen::Quaterniond q_r = Eigen::AngleAxisd(3.14159, Eigen::Vector3d::UnitZ()) *
                                          Eigen::AngleAxisd(3.14159, Eigen::Vector3d::UnitY()) *
                                          Eigen::AngleAxisd(0.00000, Eigen::Vector3d::UnitX());
@@ -453,7 +459,8 @@ namespace FDILink
                 imu_pub_.publish(imu_data);
 
                 Eigen::Quaterniond rpy_q(
-                    imu_data.orientation.w, imu_data.orientation.x, imu_data.orientation.y, imu_data.orientation.z);
+                    imu_data.orientation.w, imu_data.orientation.x, imu_data.orientation.y, imu_data.orientation.z
+                );
                 geometry_msgs::Pose2D pose_2d;
                 double                magx, magy, magz, roll, pitch;
                 if (device_type_ == 0)
@@ -507,7 +514,7 @@ namespace FDILink
         }
     }
 
-    void ahrsBringup::magCalculateYaw(double roll, double pitch, double& magyaw, double magx, double magy, double magz)
+    void AhrsBringup::magCalculateYaw(double roll, double pitch, double& magyaw, double magx, double magy, double magz)
     {
         double temp1 = magy * cos(roll) + magz * sin(roll);
         double temp2 = magx * cos(pitch) + magy * sin(pitch) * sin(roll) - magz * sin(pitch) * cos(roll);
@@ -519,7 +526,7 @@ namespace FDILink
         // return magyaw;
     }
 
-    void ahrsBringup::checkSN(int type)
+    void AhrsBringup::checkSN(int type)
     {
         switch (type)
         {
@@ -625,7 +632,7 @@ namespace FDILink
 int main(int argc, char** argv)
 {
     ros::init(argc, argv, "ahrs_bringup");
-    FDILink::ahrsBringup bp;
+    FDILink::AhrsBringup bp;
 
     return 0;
 }

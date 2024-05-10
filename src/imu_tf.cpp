@@ -1,7 +1,8 @@
 #include <ros/ros.h>
 #include <sensor_msgs/Imu.h>
-#include <string>
 #include <tf/transform_broadcaster.h>
+
+#include <string>
 
 /* 参考ROS wiki
  * http://wiki.ros.org/tf/Tutorials/Writing%20a%20tf%20broadcaster%20%28C%2B%2B%29
@@ -43,7 +44,7 @@ int main(int argc, char** argv)
     node.param("/imu_tf/position_y", position_y, 0);
     node.param("/imu_tf/position_z", position_z, 0);
 
-    ros::Subscriber sub = node.subscribe(imu_topic.c_str(), 10, &ImuCallback);
+    ros::Subscriber sub = node.subscribe(imu_topic, 10, &ImuCallback);
 
     ros::spin();
     return 0;

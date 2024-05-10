@@ -1,5 +1,4 @@
-#ifndef BASE_DRIVER_H_
-#define BASE_DRIVER_H_
+#pragma once
 
 #include <geometry_msgs/Pose2D.h>
 #include <ros/package.h>
@@ -11,10 +10,6 @@
 #include <fdilink_data_struct.h>
 #include <serial/serial.h>
 
-#include <boost/thread.hpp>
-#include <fstream>
-#include <iostream>
-#include <math.h>
 #include <string>
 
 #include "crc_table.h"
@@ -37,11 +32,11 @@ namespace FDILink
 #define PI 3.141592653589793
 #define DEG_TO_RAD 0.017453292519943295
 
-    class ahrsBringup
+    class AhrsBringup
     {
     public:
-        ahrsBringup();
-        ~ahrsBringup();
+        AhrsBringup();
+        ~AhrsBringup();
         void processLoop();
         bool checkCS8(int len);
         bool checkCS16(int len);
@@ -82,5 +77,3 @@ namespace FDILink
 
     }; // ahrsBringup
 } // namespace FDILink
-
-#endif

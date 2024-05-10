@@ -1,7 +1,5 @@
-#ifndef FDILINK_DATA_STRUCT_H_
-#define FDILINK_DATA_STRUCT_H_
+#pragma once
 
-#include <iostream>
 namespace FDILink
 {
 #pragma pack(1)
@@ -110,7 +108,7 @@ namespace FDILink
         read_imu_tmp           read_buf;
         uint8_t                read_tmp[64];
     };
-
+#pragma pack()
 // for IMU------------------------
 
 // for AHRS=========================
@@ -144,7 +142,7 @@ namespace FDILink
         read_ahrs_tmp           read_buf;
         uint8_t                 read_tmp[56];
     };
-
+#pragma pack()
 // for AHRS------------------------
 
 // for INSGPS=========================
@@ -177,7 +175,7 @@ namespace FDILink
         read_insgps_tmp           read_buf;
         uint8_t                   read_tmp[80];
     };
-
+#pragma pack()
 // for INSGPS------------------------
 
 // for Geodetic_Position=========================
@@ -205,8 +203,7 @@ namespace FDILink
         read_Geodetic_Position_tmp           read_buf;
         uint8_t                              read_tmp[40];
     };
-
+#pragma pack()
     // for Geodetic_Position------------------------
 
 } // namespace FDILink
-#endif // FDILINK_DATA_STRUCT_H_
